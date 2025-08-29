@@ -4,216 +4,108 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>¿Qué tan enferm@ de capitalismo estás?</title>
-<meta name="description" content="Instrumento satírico con base crítica (Fisher, Han, Bauman) para medir Desconocimiento y Autoengaño. Estética hacker 90s."/>
+<meta name="description" content="Cuestionario satírico (Fisher, Han, Bauman) para medir Desconocimiento y Autoengaño. Estética hacker 90s."/>
 <style>
-  /* ======= PALETA ======= */
+  /* ===== PALETA ===== */
   :root{
-    --bg:#000000;          /* fondo */
-    --heading:#27F5F5;     /* títulos (azul) */
-    --accent:#3CF527;      /* acento/botones (verde) */
-    --text:#E6E6E6;        /* texto base */
+    --bg:#000000;       /* fondo */
+    --heading:#27F5F5;  /* títulos (azul) */
+    --accent:#3CF527;   /* acentos/botones (verde) */
+    --text:#E7E7E7;     /* texto normal sobre negro */
     --muted:#9aa0a6;
-    --panel:#0b0b0b;
-    --line:#151515;
+    --panel:#0a0a0a;
+    --line:#141414;
   }
 
-  /* ======= RESET + TIPOGRAFÍA ======= */
+  /* ===== BASE & LOOK HACKER 90s ===== */
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
     line-height:1.5}
-
-  /* ======= ESTÉTICA HACKER 90s (CRT) ======= */
-  body:before{
-    /* scanlines */
-    content:"";
-    position:fixed; inset:0; pointer-events:none; z-index:9999;
-    background: repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 2px, transparent 2px 4px);
-    mix-blend-mode:soft-light;
-  }
-  .crt-glow{filter:drop-shadow(0 0 6px rgba(39,245,245,.6)) drop-shadow(0 0 12px rgba(60,245,39,.2));}
-  .blink{animation:blink 1.1s steps(1,end) infinite}
-  @keyframes blink{50%{opacity:0}}
+  h1,h2,h3{color:var(--heading);margin:0 0 .5rem}
+  a{color:var(--heading)}
   .wrap{max-width:1000px;margin:auto;padding:24px}
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
-  .terminal{
-    border:1px solid #0f0f0f; background:#060606; padding:14px; border-radius:10px;
-    box-shadow: inset 0 0 0 1px #0f0f0f, 0 0 30px rgba(60,245,39,.08);
+  .terminal{border:1px solid #0f0f0f;background:#060606;padding:12px;border-radius:10px;
+            box-shadow: inset 0 0 0 1px #0f0f0f, 0 0 30px rgba(60,245,39,.08)}
+  .glow{filter:drop-shadow(0 0 6px rgba(39,245,245,.55)) drop-shadow(0 0 10px rgba(60,245,39,.20))}
+  .scanlines:before{
+    content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 2px, transparent 2px 4px);
+    mix-blend-mode:soft-light;
   }
-  h1,h2,h3{color:var(--heading);margin:0 0 .5rem}
-  h1{font-size:clamp(1.6rem,2.6vw,2.3rem); letter-spacing:.5px}
-  h2{font-size:clamp(1.2rem,2vw,1.35rem)}
-  a{color:var(--heading)}
+  .blink{animation:blink 1.1s steps(1,end) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .ribbon{height:8px;background:repeating-linear-gradient(90deg,transparent 0 14px,var(--accent) 14px 28px)}
+  .pill{display:inline-block;border:1px solid #2b2b2b;padding:3px 8px;border-radius:999px;color:#cfcfcf;background:#080808}
 
-  /* ======= ENCABEZADO ======= */
-  .hero{position:relative; overflow:hidden}
-  .ribbon{height:8px; background:
-      repeating-linear-gradient(90deg, transparent 0 14px, var(--accent) 14px 28px);}
-  .sub{color:var(--muted)}
-
-  /* ======= BARRA PROGRESO ======= */
-  .progress{position:sticky; top:0; z-index:50; background:#020202f2;
-    border-bottom:1px solid #101010; backdrop-filter:blur(6px); padding:8px 0}
-  .bar{height:10px; border:1px solid #1b1b1b; background:#0b0b0b; border-radius:999px; overflow:hidden}
+  /* ===== BARRA PROGRESO ===== */
+  .progress{position:sticky;top:0;z-index:50;background:#020202f2;border-bottom:1px solid #101010;backdrop-filter:blur(6px);padding:8px 0}
+  .bar{height:10px;border:1px solid #1b1b1b;background:#0b0b0b;border-radius:999px;overflow:hidden}
   .bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),#6dff7c);transition:width .3s}
 
-  /* ======= FORM ======= */
+  /* ===== FORM ===== */
   .section{margin-top:18px}
-  .section-title{margin:0 0 6px}
-  .q{margin:12px 0; padding:12px; border:1px solid #121212; border-radius:10px; background:#080808}
-  .q legend, .q label.title{font-weight:700; color:#d6d6d6; margin-bottom:6px; display:block}
-  .help{color:#9aa3a7;font-size:.9rem}
+  .q{margin:12px 0;padding:12px;border:1px solid #121212;border-radius:10px;background:#080808}
+  .q legend{font-weight:700;color:#d8d8d8;margin-bottom:6px}
+  .help{color:#9da3a7;font-size:.9rem}
 
-  .Likert{display:grid; grid-template-columns:repeat(5,minmax(72px,1fr)); gap:6px}
+  .Likert{display:grid;grid-template-columns:repeat(5,minmax(70px,1fr));gap:6px}
   .Likert input{display:none}
-  .Likert label{display:flex; align-items:center; justify-content:center; padding:10px; cursor:pointer;
-    background:#0e0e0e; border:1px solid #1e1e1e; border-radius:8px}
-  .Likert input:checked+label{outline:2px solid var(--accent); background:linear-gradient(#3CF527,#3CF527); color:#061006}
+  .Likert label{display:flex;align-items:center;justify-content:center;padding:10px;cursor:pointer;background:#0e0e0e;border:1px solid #1e1e1e;border-radius:8px}
+  .Likert input:checked+label{outline:2px solid var(--accent);background:linear-gradient(#3CF527,#3CF527);color:#061006}
 
-  .choice{display:grid; grid-template-columns:repeat(2,minmax(180px,1fr)); gap:8px}
+  .choice{display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:8px}
   .choice input{display:none}
-  .choice label{padding:10px; background:#0e0e0e; border:1px solid #1e1e1e; border-radius:8px; cursor:pointer}
-  .choice input:checked+label{outline:2px solid var(--accent); background:linear-gradient(#3CF527,#3CF527); color:#061006}
+  .choice label{padding:10px;background:#0e0e0e;border:1px solid #1e1e1e;border-radius:8px;cursor:pointer}
+  .choice input:checked+label{outline:2px solid var(--accent);background:linear-gradient(#3CF527,#3CF527);color:#061006}
 
-  .range{display:flex; gap:12px; align-items:center}
+  .range{display:flex;gap:12px;align-items:center}
   input[type="range"]{width:100%}
 
-  .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
-  button{background:var(--accent); color:#061006; border:0; border-radius:10px; padding:10px 14px; font-weight:800; cursor:pointer}
-  button.secondary{background:#0d0d0d; color:#f0f0f0; border:1px solid #1f1f1f}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  button{background:var(--accent);color:#061006;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
+  button.secondary{background:#0d0d0d;color:#f0f0f0;border:1px solid #1f1f1f}
 
-  /* ======= RESULTADOS ======= */
-  .badge{display:inline-block; font-weight:800; padding:2px 8px; border-radius:999px; border:1px dashed var(--accent); color:var(--accent)}
-  .meters{display:grid; grid-template-columns:1fr; gap:14px}
-  .meter{padding:12px; background:#070707; border:1px solid #141414; border-radius:10px}
+  /* ===== RESULTADOS ===== */
+  .meters{display:grid;grid-template-columns:1fr;gap:14px}
+  .meter{padding:12px;background:#070707;border:1px solid #141414;border-radius:10px}
   .meter .bar{height:12px}
   @media(min-width:900px){ .meters{grid-template-columns:1fr 1fr} }
-
-  /* ======= ASCII CALIGRAMAS ======= */
-  .calis{display:grid; gap:12px; grid-template-columns:1fr; margin-top:14px}
-  @media(min-width:860px){ .calis{grid-template-columns:1fr 1fr} }
-  .caligram{background:#040404; border:1px solid #111; border-radius:10px; padding:10px; overflow:auto}
-  .caligram pre{margin:0; white-space:pre; line-height:1.15; color:var(--accent); text-shadow:0 0 8px rgba(60,245,39,.35)}
-  .caligram .title{color:var(--heading); font-weight:800; margin-bottom:4px}
-
-  /* ======= ASIDE INFOS ======= */
-  .pill{display:inline-block; border:1px solid #2b2b2b; padding:3px 8px; border-radius:999px; color:#bdbdbd; background:#080808}
-
+  .badge{display:inline-block;font-weight:800;padding:2px 8px;border-radius:999px;border:1px dashed var(--accent);color:var(--accent)}
 </style>
 </head>
-<body>
-  <!-- Barra superior estilo terminal con progreso -->
+<body class="scanlines">
+  <!-- PROGRESO -->
   <div class="progress">
     <div class="wrap" style="padding:0 24px">
-      <span style="color:var(--heading);font-weight:800" class="crt-glow">BOOT://diagnóstico_40ítems</span>
+      <span style="color:var(--heading);font-weight:800" class="glow">BOOT://diagnóstico_40_items</span>
       <span class="blink" style="margin-left:6px;color:var(--accent)">█</span>
       <div class="bar" aria-hidden="true" style="margin-top:6px"><span id="progressFill"></span></div>
     </div>
   </div>
 
   <div class="wrap">
-    <div class="hero panel crt-glow">
+    <!-- CABECERA -->
+    <div class="panel glow">
       <div class="ribbon" aria-hidden="true"></div>
       <h1>¿Qué tan enferm@ de capitalismo estás?</h1>
-      <p class="sub">Instrumento satírico con base crítica (Fisher, 2009; Han, 2010; Bauman, 2000/2005). Evalúa dos ejes: <span class="badge">Desconocimiento</span> y <span class="badge">Autoengaño</span>.</p>
-      <div class="terminal" aria-label="ascii title">
-<pre style="color:#27F5F5;margin:0">
-   ____      _   _          _ _ _         _   _     _           _           
-  / ___|__ _| |_| |__   ___| | (_)_ __   | | | |___| |__  _   _| | ___  ___ 
- | |   / _` | __| '_ \ / _ \ | | | '_ \  | | | / __| '_ \| | | | |/ _ \/ __|
- | |__| (_| | |_| | | |  __/ | | | | | | | |_| \__ \ | | | |_| | |  __/\__ \
-  \____\__,_|\__|_| |_|\___|_|_|_|_| |_|  \___/|___/_| |_|\__,_|_|\___||___/
-</pre>
-      </div>
+      <p class="help">Instrumento satírico con base crítica (Fisher, 2009; Han, 2010; Bauman, 2000/2005). Evalúa dos ejes: <span class="badge">Desconocimiento</span> y <span class="badge">Autoengaño</span>.</p>
 
-      <!-- Caligramas en texto real (ASCII) con objetos de consumo -->
-      <div class="calis">
-        <div class="caligram">
-          <div class="title">SMARTPHONE — scroll/like/buy</div>
-<pre>
-#########################
-# LIKE  BUY  SHARE  ADD #
-#                       #
-#  SCROLL  SCROLL  ADS  #
-#                       #
-#  UPGRADE  NOTIFY $$$  #
-#                       #
-#   CAMERA  SELFIE  ★   #
-#                       #
-#       BRAND  ID       #
-#_______________________#
-|   HOME  APPS  METRICS |
-|_______________________|
-</pre>
-        </div>
-
-        <div class="caligram">
-          <div class="title">CARRITO — ofertas y métricas</div>
-<pre>
-        _________
-   ____/  -  -  \_____
-  /  OFERTA -20%     /|
- /__METRICS-LIKES___/ |
- |  CUPÓN  | PRECIO | |
- |_________|________|/
-   O                 O
-   O  CONSUME • CHECKOUT
-</pre>
-        </div>
-
-        <div class="caligram">
-          <div class="title">TARJETA — deuda</div>
-<pre>
- _____________________________
-| DEUDA     ████  ████  ████ |
-| --------- CAPITAL REWARDS  |
-| #### #### #### ####        |
-| NOMBRE: MARCA PERSONAL     |
-| VENCE: 12/99    CVV: 999   |
-|____________________________|
-</pre>
-        </div>
-
-        <div class="caligram">
-          <div class="title">VASO TO-GO — productividad líquida</div>
-<pre>
-      _____________
-     /   ENERGY    \
-    /  COFFEE-XL    \
-   /__UPGRADE-FOCUS__\
-   |   KPI  KPI      |
-   |   KPI  KPI      |
-   |   KPI  KPI      |
-   |     TO  GO      |
-   |  #HUSTLE  #BUSY |
-   |_________________|
-        (     )
-         (   )
-          |_|
-</pre>
-        </div>
-
-        <div class="caligram">
-          <div class="title">SNEAKER — edición limitada</div>
-<pre>
-        ________
-   ____/  LIMITED\__
- _/  DROP  #HYPE   \_
-/__ BRAND • AIR • ™ __\
-\__  LACES  STATUS __/
-   \_____SOLE_____/        RUN → BUY → RUN
-</pre>
-        </div>
+      <!-- línea terminal sin ASCII arte -->
+      <div class="terminal" aria-label="prompt">
+        <div style="color:#27F5F5">user@critico:~$ <span style="color:#3CF527">run ./diagnostico --items=40 --ejes=Desconocimiento,Autoengaño</span></div>
       </div>
     </div>
 
     <!-- FORMULARIO -->
     <main class="panel section" id="app">
-      <h2 class="section-title">Responde todo (0 = Nada/En desacuerdo → 4 = Mucho/De acuerdo)</h2>
+      <h2>Responde todo (0 = Nada/En desacuerdo → 4 = Mucho/De acuerdo)</h2>
       <div class="pill">Escala Likert 0–4</div>
       <div class="pill">2 ejes</div>
       <form id="form"></form>
 
+      <!-- RESULTADOS -->
       <section id="results" class="panel section" hidden>
         <h2>Resultados</h2>
         <div class="meters">
@@ -236,6 +128,7 @@
       </section>
     </main>
 
+    <!-- REFERENCIAS -->
     <footer class="panel section">
       <h2>Referencias mínimas</h2>
       <ul class="help" style="margin-top:6px">
@@ -247,9 +140,7 @@
   </div>
 
 <script>
-/* =======================
-   Configuración del instrumento
-   ======================= */
+/* ========== CONFIGURACIÓN DEL INSTRUMENTO ========== */
 const SCALE = [
   "0 · Nada/Totalmente en desacuerdo",
   "1 · Poco/En desacuerdo",
@@ -264,4 +155,34 @@ const questions = [
   {t:"Me siento culpable cuando descanso.", dim:"a", type:"likert"},
   {t:"‘No hacer nada’ me parece una pérdida de tiempo.", dim:"a", type:"likert"},
   {t:"Me defino más por mi trabajo que por mi vida personal.", dim:"a", type:"likert"},
-  {t:"Hago horas extra s
+  {t:"Hago horas extra sin pagar con frecuencia.", dim:"a", type:"likert"},
+  {t:"He romantizado el burnout (quemarme) como señal de compromiso.", dim:"a", type:"likert"},
+  {t:"He dicho/creído ‘soy mi propio jefe’ para justificar autoexplotarme.", dim:"a", type:"likert"},
+  {t:"La productividad está por encima de mi salud.", dim:"a", type:"likert"},
+  // B. Redes/consumo (Bauman)
+  {t:"Me parece normal tener que venderme como marca personal.", dim:"a", type:"likert"},
+  {t:"He medido mi valía por likes o métricas digitales.", dim:"a", type:"likert"},
+  {t:"Del 0 al 10, ¿cuánto te vendes en redes sociales?", dim:"a", type:"scale10"},
+  {t:"Compré cosas solo para mostrarlas en redes.", dim:"a", type:"likert"},
+  {t:"Me da ansiedad no estar ‘actualizado/a’ (moda/tech).", dim:"a", type:"likert"},
+  {t:"Creo que la privacidad es casi obsoleta si quiero participar en la vida digital.", dim:"a", type:"likert"},
+  {t:"Actúo como si siempre me observaran (panóptico interiorizado).", dim:"a", type:"likert"},
+  // C. Ideología / creencias (Fisher)
+  {t:"Niego o minimizo el cambio climático.", dim:"d", type:"likert"},
+  {t:"Pienso que la igualdad social genera mediocridad.", dim:"d", type:"likert"},
+  {t:"¿Quién dirías que es más peligroso para la sociedad?", dim:"d", type:"choice",
+    opts:[
+      {label:"Millonarios que evaden impuestos", v:0},
+      {label:"Inmigrantes pobres", v:4},
+      {label:"Ambos por distintas razones", v:2},
+      {label:"Ninguno", v:3}
+    ]},
+  {t:"El éxito se mide principalmente por el dinero acumulado.", dim:"d", type:"likert"},
+  {t:"Siendo de clase trabajadora, apoyo partidos que benefician ante todo a los ricos.", dim:"d", type:"likert"},
+  {t:"Pienso que los pobres lo son por falta de esfuerzo.", dim:"d", type:"likert"},
+  {t:"Creo que cualquier alternativa al capitalismo termina en comunismo autoritario.", dim:"d", type:"likert"},
+  {t:"El sistema es injusto, pero no hay alternativa posible.", dim:"d", type:"likert"},
+  {t:"Me molesta más una huelga que una subida de precios.", dim:"d", type:"likert"},
+  {t:"Prefiero ‘emprender’ a tener derechos laborales garantizados.", dim:"d", type:"likert"},
+  // D. Vínculos / vida líquida (Bauman + Han)
+  {t:"Veo mis amistades principalmente como ‘contactos ú
