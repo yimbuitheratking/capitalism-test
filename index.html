@@ -3,159 +3,220 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Diagnóstico: ¿Qué tan enferm@ de capitalismo estás? </title>
+<title>¿Qué tan enferm@ de capitalismo estás?</title>
+<meta name="description" content="Instrumento satírico con base crítica (Fisher, Han, Bauman) para medir Desconocimiento y Autoengaño. Estética hacker 90s."/>
 <style>
+  /* ======= PALETA ======= */
   :root{
-    --bg:#000000;
-    --heading:#27F5F5;
-    --accent:#3CF527;
-    --text:#E8E8E8;   /* legibilidad sobre negro */
-    --soft:#9aa0a6;
-    --card:#0c0c0c;
-    --line:#1a1a1a;
+    --bg:#000000;          /* fondo */
+    --heading:#27F5F5;     /* títulos (azul) */
+    --accent:#3CF527;      /* acento/botones (verde) */
+    --text:#E6E6E6;        /* texto base */
+    --muted:#9aa0a6;
+    --panel:#0b0b0b;
+    --line:#151515;
   }
+
+  /* ======= RESET + TIPOGRAFÍA ======= */
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;line-height:1.45}
-  a{color:var(--heading)}
-  h1,h2,h3{color:var(--heading);margin:0 0 .4rem}
-  h1{font-size:clamp(1.8rem,2.5vw,2.4rem);letter-spacing:.3px}
-  h2{font-size:clamp(1.2rem,2vw,1.4rem)}
-  .wrap{max-width:980px;margin:auto;padding:24px}
-  .hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:
-    radial-gradient(1200px 240px at 10% -10%, #27f5f522, transparent 60%),
-    radial-gradient(1000px 260px at 110% 0%, #3cf52712, transparent 60%),
-    var(--card);
-    padding:28px 24px 18px 24px}
-  .sub{color:var(--soft)}
-  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-  .pill{border:1px solid #2a2a2a;border-radius:999px;padding:4px 10px;font-size:.8rem;color:#c7c7c7;background:#0b0b0b}
-  .strip{height:10px;background:
-      repeating-linear-gradient(135deg,transparent 0 14px,var(--accent) 14px 28px);
-      opacity:.18;border-radius:10px;margin:10px 0 0}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+    line-height:1.5}
 
-  /* layout */
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px;margin-top:18px}
-  .section-title{margin:10px 0 6px}
-  .q{padding:14px 12px;border:1px solid #141414;background:#0a0a0a;border-radius:12px;margin:12px 0}
-  .q legend,.q label.title{display:block;font-weight:600;margin-bottom:8px}
-  .help{color:#9da3a7;font-size:.9rem}
-  .row{display:flex;flex-wrap:wrap;gap:8px}
-  .Likert{display:grid;grid-template-columns:repeat(5,minmax(80px,1fr));gap:6px}
-  .Likert label{display:flex;align-items:center;justify-content:center;border:1px solid #202020;background:#0f0f0f;border-radius:10px;padding:10px;cursor:pointer}
-  .Likert input{display:none}
-  .Likert input:checked+label{outline:2px solid var(--accent);color:#111;background:linear-gradient(#3cf527,#3cf527)}
-  .choice{display:grid;grid-template-columns:repeat(2,minmax(160px,1fr));gap:8px}
-  .choice label{border:1px solid #202020;background:#0f0f0f;border-radius:10px;padding:10px;cursor:pointer;display:flex;gap:8px;align-items:center}
-  .choice input{display:none}
-  .choice input:checked+label{outline:2px solid var(--accent);color:#111;background:linear-gradient(#3cf527,#3cf527)}
-  .range{display:flex;gap:14px;align-items:center}
-  input[type="range"]{width:100%}
-  .progress{position:sticky;top:0;background:#050505cc;backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid #151515;padding:10px 16px;z-index:50}
-  .bar{height:8px;background:#101010;border:1px solid #1a1a1a;border-radius:999px;overflow:hidden}
-  .bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),#54ff6a);transition:width .3s}
-
-  /* results */
-  .results-grid{display:grid;grid-template-columns:1fr;gap:14px}
-  .meter{background:#0b0b0b;border:1px solid #171717;border-radius:12px;padding:12px}
-  .meter h3{margin-bottom:10px}
-  .meter .bar{height:12px}
-  .badge{display:inline-block;font-weight:700;padding:3px 10px;border-radius:999px;border:1px dashed var(--accent);color:var(--accent);background:transparent}
-
-  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-  button{background:var(--accent);color:#0b0b0b;border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
-  button.secondary{background:#101010;color:#e5e5e5;border:1px solid #232323}
-  button:focus{outline:2px solid var(--heading);outline-offset:2px}
-
-  /* caligramas industriales */
-  .caligramas{position:relative;height:240px;margin-top:10px}
-  .svg-gear,.svg-factory{position:absolute;inset:0;pointer-events:none;opacity:.55;mix-blend-mode:screen}
-  .svg-gear{transform:translate(-35%, -18%) scale(.8);filter:drop-shadow(0 0 4px #27f5f5)}
-  .svg-factory{transform:translate(35%, 5%) scale(.9);opacity:.5;filter:drop-shadow(0 0 6px #3cf527)}
-  .footer-ref{color:#a5a5a5;font-size:.9rem}
-  .hr{height:1px;background:#151515;margin:20px 0}
-
-  @media (min-width:900px){
-    .results-grid{grid-template-columns:1fr 1fr}
+  /* ======= ESTÉTICA HACKER 90s (CRT) ======= */
+  body:before{
+    /* scanlines */
+    content:"";
+    position:fixed; inset:0; pointer-events:none; z-index:9999;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 2px, transparent 2px 4px);
+    mix-blend-mode:soft-light;
   }
+  .crt-glow{filter:drop-shadow(0 0 6px rgba(39,245,245,.6)) drop-shadow(0 0 12px rgba(60,245,39,.2));}
+  .blink{animation:blink 1.1s steps(1,end) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .wrap{max-width:1000px;margin:auto;padding:24px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .terminal{
+    border:1px solid #0f0f0f; background:#060606; padding:14px; border-radius:10px;
+    box-shadow: inset 0 0 0 1px #0f0f0f, 0 0 30px rgba(60,245,39,.08);
+  }
+  h1,h2,h3{color:var(--heading);margin:0 0 .5rem}
+  h1{font-size:clamp(1.6rem,2.6vw,2.3rem); letter-spacing:.5px}
+  h2{font-size:clamp(1.2rem,2vw,1.35rem)}
+  a{color:var(--heading)}
+
+  /* ======= ENCABEZADO ======= */
+  .hero{position:relative; overflow:hidden}
+  .ribbon{height:8px; background:
+      repeating-linear-gradient(90deg, transparent 0 14px, var(--accent) 14px 28px);}
+  .sub{color:var(--muted)}
+
+  /* ======= BARRA PROGRESO ======= */
+  .progress{position:sticky; top:0; z-index:50; background:#020202f2;
+    border-bottom:1px solid #101010; backdrop-filter:blur(6px); padding:8px 0}
+  .bar{height:10px; border:1px solid #1b1b1b; background:#0b0b0b; border-radius:999px; overflow:hidden}
+  .bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),#6dff7c);transition:width .3s}
+
+  /* ======= FORM ======= */
+  .section{margin-top:18px}
+  .section-title{margin:0 0 6px}
+  .q{margin:12px 0; padding:12px; border:1px solid #121212; border-radius:10px; background:#080808}
+  .q legend, .q label.title{font-weight:700; color:#d6d6d6; margin-bottom:6px; display:block}
+  .help{color:#9aa3a7;font-size:.9rem}
+
+  .Likert{display:grid; grid-template-columns:repeat(5,minmax(72px,1fr)); gap:6px}
+  .Likert input{display:none}
+  .Likert label{display:flex; align-items:center; justify-content:center; padding:10px; cursor:pointer;
+    background:#0e0e0e; border:1px solid #1e1e1e; border-radius:8px}
+  .Likert input:checked+label{outline:2px solid var(--accent); background:linear-gradient(#3CF527,#3CF527); color:#061006}
+
+  .choice{display:grid; grid-template-columns:repeat(2,minmax(180px,1fr)); gap:8px}
+  .choice input{display:none}
+  .choice label{padding:10px; background:#0e0e0e; border:1px solid #1e1e1e; border-radius:8px; cursor:pointer}
+  .choice input:checked+label{outline:2px solid var(--accent); background:linear-gradient(#3CF527,#3CF527); color:#061006}
+
+  .range{display:flex; gap:12px; align-items:center}
+  input[type="range"]{width:100%}
+
+  .btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+  button{background:var(--accent); color:#061006; border:0; border-radius:10px; padding:10px 14px; font-weight:800; cursor:pointer}
+  button.secondary{background:#0d0d0d; color:#f0f0f0; border:1px solid #1f1f1f}
+
+  /* ======= RESULTADOS ======= */
+  .badge{display:inline-block; font-weight:800; padding:2px 8px; border-radius:999px; border:1px dashed var(--accent); color:var(--accent)}
+  .meters{display:grid; grid-template-columns:1fr; gap:14px}
+  .meter{padding:12px; background:#070707; border:1px solid #141414; border-radius:10px}
+  .meter .bar{height:12px}
+  @media(min-width:900px){ .meters{grid-template-columns:1fr 1fr} }
+
+  /* ======= ASCII CALIGRAMAS ======= */
+  .calis{display:grid; gap:12px; grid-template-columns:1fr; margin-top:14px}
+  @media(min-width:860px){ .calis{grid-template-columns:1fr 1fr} }
+  .caligram{background:#040404; border:1px solid #111; border-radius:10px; padding:10px; overflow:auto}
+  .caligram pre{margin:0; white-space:pre; line-height:1.15; color:var(--accent); text-shadow:0 0 8px rgba(60,245,39,.35)}
+  .caligram .title{color:var(--heading); font-weight:800; margin-bottom:4px}
+
+  /* ======= ASIDE INFOS ======= */
+  .pill{display:inline-block; border:1px solid #2b2b2b; padding:3px 8px; border-radius:999px; color:#bdbdbd; background:#080808}
+
 </style>
 </head>
 <body>
+  <!-- Barra superior estilo terminal con progreso -->
   <div class="progress">
-    <div class="wrap" style="padding:0">
-      <strong style="color:var(--heading)">Diagnóstico (40 ítems)</strong>
-      <div class="bar" aria-hidden="true"><span id="progressFill"></span></div>
+    <div class="wrap" style="padding:0 24px">
+      <span style="color:var(--heading);font-weight:800" class="crt-glow">BOOT://diagnóstico_40ítems</span>
+      <span class="blink" style="margin-left:6px;color:var(--accent)">█</span>
+      <div class="bar" aria-hidden="true" style="margin-top:6px"><span id="progressFill"></span></div>
     </div>
   </div>
 
   <div class="wrap">
-    <header class="hero">
-      <h1>¿Qué tan “capitalismo” llevas dentro?</h1>
-      <p class="sub">
-        Instrumento satírico con base crítica en Fisher (2009), Han (2010) y Bauman (2000; 2005). 
-        Evalúa dos dimensiones: <span class="badge">Desconocimiento</span> y <span class="badge">Autoengaño</span>.
-      </p>
-      <div class="meta">
-        <span class="pill">Escala Likert 0–4</span>
-        <span class="pill">2 ejes</span>
-        <span class="pill">Resultados inmediatos</span>
+    <div class="hero panel crt-glow">
+      <div class="ribbon" aria-hidden="true"></div>
+      <h1>¿Qué tan enferm@ de capitalismo estás?</h1>
+      <p class="sub">Instrumento satírico con base crítica (Fisher, 2009; Han, 2010; Bauman, 2000/2005). Evalúa dos ejes: <span class="badge">Desconocimiento</span> y <span class="badge">Autoengaño</span>.</p>
+      <div class="terminal" aria-label="ascii title">
+<pre style="color:#27F5F5;margin:0">
+   ____      _   _          _ _ _         _   _     _           _           
+  / ___|__ _| |_| |__   ___| | (_)_ __   | | | |___| |__  _   _| | ___  ___ 
+ | |   / _` | __| '_ \ / _ \ | | | '_ \  | | | / __| '_ \| | | | |/ _ \/ __|
+ | |__| (_| | |_| | | |  __/ | | | | | | | |_| \__ \ | | | |_| | |  __/\__ \
+  \____\__,_|\__|_| |_|\___|_|_|_|_| |_|  \___/|___/_| |_|\__,_|_|\___||___/
+</pre>
       </div>
-      <div class="strip" aria-hidden="true"></div>
 
-      <!-- Caligramas industriales -->
-      <div class="caligramas" aria-hidden="true">
-        <!-- Gear caligrama: texto en círculo -->
-        <svg class="svg-gear" viewBox="0 0 600 600">
-          <defs>
-            <path id="ring" d="M300,100 A200,200 0 1,1 299.9,100" />
-            <path id="ring2" d="M300,150 A150,150 0 1,1 299.9,150" />
-          </defs>
-          <g fill="none" stroke="#27F5F5" stroke-width="2">
-            <circle cx="300" cy="300" r="220"></circle>
-            <circle cx="300" cy="300" r="180"></circle>
-            <circle cx="300" cy="300" r="140"></circle>
-          </g>
-          <g font-size="18" fill="#27F5F5">
-            <text>
-              <textPath href="#ring" startOffset="0%">
-                TRABAJO • RENDIMIENTO • PRODUCCIÓN • CONSUMO • VIGILANCIA • RIESGO •
-              </textPath>
-            </text>
-            <text>
-              <textPath href="#ring2" startOffset="25%">
-                MARCA PERSONAL • ALGORITMO • AUTOEXPLOTACIÓN • DEUDA • ÉXITO •
-              </textPath>
-            </text>
-          </g>
-        </svg>
+      <!-- Caligramas en texto real (ASCII) con objetos de consumo -->
+      <div class="calis">
+        <div class="caligram">
+          <div class="title">SMARTPHONE — scroll/like/buy</div>
+<pre>
+#########################
+# LIKE  BUY  SHARE  ADD #
+#                       #
+#  SCROLL  SCROLL  ADS  #
+#                       #
+#  UPGRADE  NOTIFY $$$  #
+#                       #
+#   CAMERA  SELFIE  ★   #
+#                       #
+#       BRAND  ID       #
+#_______________________#
+|   HOME  APPS  METRICS |
+|_______________________|
+</pre>
+        </div>
 
-        <!-- Factory caligrama: humo con texto -->
-        <svg class="svg-factory" viewBox="0 0 800 260">
-          <defs>
-            <path id="smoke" d="M150,180 C180,90 300,80 360,150 C420,220 520,200 620,120" />
-          </defs>
-          <g stroke="#3CF527" stroke-width="2" fill="none">
-            <path d="M80,220 h90 v-50 h30 v50 h60 v-80 h30 v80 h60 v-110 h30 v110 h100" />
-            <rect x="90" y="150" width="40" height="70" />
-            <rect x="140" y="140" width="40" height="80" />
-          </g>
-          <text font-size="18" fill="#3CF527">
-            <textPath href="#smoke" startOffset="5%">
-              BENEFICIO • CRECIMIENTO • EFICIENCIA • FLEXIBILIDAD • COMPETENCIA •
-            </textPath>
-          </text>
-        </svg>
+        <div class="caligram">
+          <div class="title">CARRITO — ofertas y métricas</div>
+<pre>
+        _________
+   ____/  -  -  \_____
+  /  OFERTA -20%     /|
+ /__METRICS-LIKES___/ |
+ |  CUPÓN  | PRECIO | |
+ |_________|________|/
+   O                 O
+   O  CONSUME • CHECKOUT
+</pre>
+        </div>
+
+        <div class="caligram">
+          <div class="title">TARJETA — deuda</div>
+<pre>
+ _____________________________
+| DEUDA     ████  ████  ████ |
+| --------- CAPITAL REWARDS  |
+| #### #### #### ####        |
+| NOMBRE: MARCA PERSONAL     |
+| VENCE: 12/99    CVV: 999   |
+|____________________________|
+</pre>
+        </div>
+
+        <div class="caligram">
+          <div class="title">VASO TO-GO — productividad líquida</div>
+<pre>
+      _____________
+     /   ENERGY    \
+    /  COFFEE-XL    \
+   /__UPGRADE-FOCUS__\
+   |   KPI  KPI      |
+   |   KPI  KPI      |
+   |   KPI  KPI      |
+   |     TO  GO      |
+   |  #HUSTLE  #BUSY |
+   |_________________|
+        (     )
+         (   )
+          |_|
+</pre>
+        </div>
+
+        <div class="caligram">
+          <div class="title">SNEAKER — edición limitada</div>
+<pre>
+        ________
+   ____/  LIMITED\__
+ _/  DROP  #HYPE   \_
+/__ BRAND • AIR • ™ __\
+\__  LACES  STATUS __/
+   \_____SOLE_____/        RUN → BUY → RUN
+</pre>
+        </div>
       </div>
-    </header>
+    </div>
 
-    <main class="card" id="app">
-      <h2 class="section-title">Responde todo (0 = Nada/En desacuerdo → 4 = Mucho/Totalmente de acuerdo)</h2>
+    <!-- FORMULARIO -->
+    <main class="panel section" id="app">
+      <h2 class="section-title">Responde todo (0 = Nada/En desacuerdo → 4 = Mucho/De acuerdo)</h2>
+      <div class="pill">Escala Likert 0–4</div>
+      <div class="pill">2 ejes</div>
       <form id="form"></form>
 
-      <div class="hr"></div>
-
-      <section id="results" class="card" hidden>
+      <section id="results" class="panel section" hidden>
         <h2>Resultados</h2>
-        <div class="results-grid">
+        <div class="meters">
           <div class="meter">
             <h3>Desconocimiento</h3>
             <div class="bar"><span id="dFill"></span></div>
@@ -175,19 +236,19 @@
       </section>
     </main>
 
-    <footer class="card">
-      <h2>Referencias breves (marco crítico)</h2>
-      <ul class="footer-ref">
-        <li>Fisher, M. (2009). <em>Realismo capitalista</em>. “Es más fácil imaginar el fin del mundo que el fin del capitalismo”.</li>
-        <li>Han, B.-C. (2010). <em>La sociedad del cansancio</em>. El sujeto del rendimiento y la autoexplotación.</li>
-        <li>Bauman, Z. (2000). <em>Modernidad líquida</em>; (2005). <em>Vida líquida</em>. Fragilidad de vínculos y consumismo.</li>
+    <footer class="panel section">
+      <h2>Referencias mínimas</h2>
+      <ul class="help" style="margin-top:6px">
+        <li>Fisher, M. (2009). <em>Realismo capitalista</em>.</li>
+        <li>Han, B.-C. (2010). <em>La sociedad del cansancio</em>.</li>
+        <li>Bauman, Z. (2000). <em>Modernidad líquida</em>; (2005). <em>Vida líquida</em>.</li>
       </ul>
     </footer>
   </div>
 
 <script>
 /* =======================
-   Definición del instrumento
+   Configuración del instrumento
    ======================= */
 const SCALE = [
   "0 · Nada/Totalmente en desacuerdo",
@@ -197,299 +258,10 @@ const SCALE = [
   "4 · Mucho/Totalmente de acuerdo"
 ];
 
-// 40 ítems. dim = 'd' (Desconocimiento) o 'a' (Autoengaño)
+// 40 ítems: dim = 'd' (Desconocimiento) o 'a' (Autoengaño)
 const questions = [
   // A. Trabajo / autoexplotación (Han)
   {t:"Me siento culpable cuando descanso.", dim:"a", type:"likert"},
   {t:"‘No hacer nada’ me parece una pérdida de tiempo.", dim:"a", type:"likert"},
   {t:"Me defino más por mi trabajo que por mi vida personal.", dim:"a", type:"likert"},
-  {t:"Hago horas extra sin pagar con frecuencia.", dim:"a", type:"likert"},
-  {t:"He romantizado el burnout (quemarme) como señal de compromiso.", dim:"a", type:"likert"},
-  {t:"He dicho/creído ‘soy mi propio jefe’ para justificar autoexplotarme.", dim:"a", type:"likert"},
-  {t:"La productividad está por encima de mi salud.", dim:"a", type:"likert"},
-  // B. Redes/consumo (Bauman)
-  {t:"Me parece normal tener que venderme como marca personal.", dim:"a", type:"likert"},
-  {t:"He medido mi valía por likes o métricas digitales.", dim:"a", type:"likert"},
-  {t:"Del 0 al 10, ¿cuánto te vendes en redes sociales?", dim:"a", type:"scale10"},
-  {t:"Compré cosas solo para mostrarlas en redes.", dim:"a", type:"likert"},
-  {t:"Me da ansiedad no estar ‘actualizado/a’ (moda/tech).", dim:"a", type:"likert"},
-  {t:"Creo que la privacidad es casi obsoleta si quiero participar en la vida digital.", dim:"a", type:"likert"},
-  {t:"Actúo como si siempre me observaran (panóptico interiorizado).", dim:"a", type:"likert"},
-  // C. Ideología / creencias (Fisher)
-  {t:"Niego o minimizo el cambio climático.", dim:"d", type:"likert"},
-  {t:"Pienso que la igualdad social genera mediocridad.", dim:"d", type:"likert"},
-  {t:"¿Quién dirías que es más peligroso para la sociedad?", dim:"d", type:"choice",
-    opts:[
-      {label:"Millonarios que evaden impuestos", v:0},
-      {label:"Inmigrantes pobres", v:4},
-      {label:"Ambos por distintas razones", v:2},
-      {label:"Ninguno", v:3}
-    ]},
-  {t:"El éxito se mide principalmente por el dinero acumulado.", dim:"d", type:"likert"},
-  {t:"Siendo de clase trabajadora, apoyo partidos que benefician ante todo a los ricos.", dim:"d", type:"likert"},
-  {t:"Pienso que los pobres lo son por falta de esfuerzo.", dim:"d", type:"likert"},
-  {t:"Creo que cualquier alternativa al capitalismo termina en comunismo autoritario.", dim:"d", type:"likert"},
-  {t:"El sistema es injusto, pero no hay alternativa posible.", dim:"d", type:"likert"},
-  {t:"Me molesta más una huelga que una subida de precios.", dim:"d", type:"likert"},
-  {t:"Prefiero ‘emprender’ a tener derechos laborales garantizados.", dim:"d", type:"likert"},
-  // D. Vínculos / vida líquida (Bauman + Han)
-  {t:"Veo mis amistades principalmente como ‘contactos útiles’.", dim:"a", type:"likert"},
-  {t:"Invierto tiempo en alguien solo si ‘vale la pena’.", dim:"a", type:"likert"},
-  {t:"Gestiono las relaciones como proyectos con objetivos y métricas.", dim:"a", type:"likert"},
-  {t:"Me aburren los compromisos que no tienen gratificación inmediata.", dim:"a", type:"likert"},
-  {t:"He dejado vínculos importantes por crecer profesionalmente.", dim:"a", type:"likert"},
-  {t:"Mido mi éxito personal por cuántos proyectos llevo a la vez.", dim:"a", type:"likert"},
-  // Cultura / sentido común económico
-  {t:"Valoro la cultura en función de si es monetizable.", dim:"d", type:"likert"},
-  {t:"Me considero ‘clase media’ aunque mis ingresos sean bajos.", dim:"a", type:"likert"},
-  {t:"La competencia siempre mejora cualquier sistema.", dim:"d", type:"likert"},
-  {t:"La educación es sobre todo una inversión para ganar más dinero.", dim:"d", type:"likert"},
-  {t:"Me comparo constantemente con métricas (rankings, followers, salario, etc.).", dim:"a", type:"likert"},
-  {t:"Compro cosas ‘eco’ para sentirme bien sin cambiar hábitos de fondo.", dim:"a", type:"likert"},
-  {t:"Veo a los inmigrantes como competidores laborales directos.", dim:"d", type:"likert"},
-  {t:"La regulación del Estado es un obstáculo a la libertad incluso en salud/ambiente.", dim:"d", type:"likert"},
-  {t:"Me identifico más como ‘marca personal’ que como ciudadano/a o comunidad.", dim:"a", type:"likert"},
-  {t:"Del 0 al 10, ¿cuánto te sobreexplotas (autoexigencia/culpa por descansar)?", dim:"a", type:"scale10"}
-];
-
-// util
-const $ = s=>document.querySelector(s);
-const form = $("#form");
-const resultsBox = $("#results");
-const progressFill = $("#progressFill");
-const dFill = $("#dFill");
-const aFill = $("#aFill");
-const dText = $("#dText");
-const aText = $("#aText");
-const overall = $("#overall");
-
-function render(){
-  let idx = 0;
-  const frag = document.createDocumentFragment();
-
-  // Agrupar por secciones para mejor lectura
-  const groups = [
-    {name:"A · Trabajo y rendimiento (Han)", from:0, to:7},
-    {name:"B · Consumo, imagen y redes (Bauman)", from:7, to:14},
-    {name:"C · Ideología y sentido común (Fisher)", from:14, to:24},
-    {name:"D · Vínculos y vida líquida (Bauman/Han)", from:24, to:33},
-    {name:"E · Cultura, regulación y marca personal", from:33, to:40}
-  ];
-
-  groups.forEach(g=>{
-    const box = document.createElement("section");
-    box.className = "card";
-    const h = document.createElement("h3");
-    h.className = "section-title";
-    h.textContent = g.name;
-    box.appendChild(h);
-
-    for(let i=g.from;i<g.to;i++){
-      const q = questions[i];
-      const id = `q${i+1}`;
-      const qWrap = document.createElement("fieldset");
-      qWrap.className = "q";
-      const legend = document.createElement("legend");
-      legend.textContent = `${i+1}. ${q.t}`;
-      qWrap.appendChild(legend);
-
-      if(q.type==="likert"){
-        const grid = document.createElement("div");
-        grid.className = "Likert";
-        for(let v=0;v<5;v++){
-          const input = document.createElement("input");
-          input.type="radio"; input.name=id; input.value=String(v);
-          input.id = `${id}_${v}`; input.required = true;
-          const lab = document.createElement("label");
-          lab.setAttribute("for", input.id);
-          lab.title = SCALE[v];
-          lab.textContent = String(v);
-          grid.appendChild(input); grid.appendChild(lab);
-        }
-        qWrap.appendChild(grid);
-      }
-      else if(q.type==="choice"){
-        const grid = document.createElement("div");
-        grid.className = "choice";
-        q.opts.forEach((op, k)=>{
-          const input = document.createElement("input");
-          input.type="radio"; input.name=id; input.value=String(op.v);
-          input.id=`${id}_c${k}`; input.required=true;
-          const lab = document.createElement("label");
-          lab.setAttribute("for", input.id);
-          lab.innerHTML = `<strong>${op.label}</strong>`;
-          grid.appendChild(input); grid.appendChild(lab);
-        });
-        qWrap.appendChild(grid);
-      }
-      else if(q.type==="scale10"){
-        const div = document.createElement("div");
-        div.className = "range";
-        const r = document.createElement("input");
-        r.type="range"; r.min="0"; r.max="10"; r.step="1"; r.value="5";
-        r.name=id; r.id=id;
-        const out = document.createElement("output");
-        out.textContent = "5";
-        r.addEventListener("input",()=>out.textContent = r.value);
-        div.appendChild(r); div.appendChild(out);
-        qWrap.appendChild(div);
-        const hlp = document.createElement("div");
-        hlp.className="help";
-        hlp.textContent = "0 = nada · 10 = muchísimo";
-        qWrap.appendChild(hlp);
-      }
-
-      // marcar meta para leer después
-      qWrap.dataset.dim = q.dim;
-      qWrap.dataset.type = q.type;
-      qWrap.id = id;
-      box.appendChild(qWrap);
-    }
-
-    frag.appendChild(box);
-  });
-
-  // Botón enviar
-  const actions = document.createElement("div");
-  actions.className = "btns";
-  const submit = document.createElement("button");
-  submit.type="submit"; submit.textContent = "Calcular resultados";
-  const clear = document.createElement("button");
-  clear.type="reset"; clear.textContent = "Limpiar";
-  clear.className = "secondary";
-  actions.appendChild(submit); actions.appendChild(clear);
-  frag.appendChild(actions);
-
-  form.appendChild(frag);
-}
-
-function getProgress(){
-  // % de preguntas con respuesta marcada
-  const totalLikert = form.querySelectorAll('.q[data-type="likert"]').length;
-  const totalChoice = form.querySelectorAll('.q[data-type="choice"]').length;
-  const totalScale  = form.querySelectorAll('.q[data-type="scale10"]').length;
-  const answeredLikert = Array.from(form.querySelectorAll('.q[data-type="likert"]'))
-        .filter(q => form.querySelector(`input[name="${q.id}"]:checked`)).length;
-  const answeredChoice = Array.from(form.querySelectorAll('.q[data-type="choice"]'))
-        .filter(q => form.querySelector(`input[name="${q.id}"]:checked`)).length;
-  const answeredScale  = Array.from(form.querySelectorAll('.q[data-type="scale10"]')).length; // sliders tienen valor por defecto
-  const ans = answeredLikert + answeredChoice + answeredScale;
-  const total = totalLikert + totalChoice + totalScale;
-  return Math.round(ans*100/total);
-}
-
-function score(){
-  let d = 0, a = 0, dMax = 0, aMax = 0;
-  const rows = form.querySelectorAll(".q");
-  for(const q of rows){
-    const id = q.id;
-    const dim = q.dataset.dim;
-    let v = 0;
-    if(q.dataset.type==="likert" || q.dataset.type==="choice"){
-      const sel = form.querySelector(`input[name="${id}"]:checked`);
-      if(!sel) { // seguridad
-        continue;
-      }
-      v = Number(sel.value); // 0–4
-    } else { // scale10 → normalizamos a 0–4
-      const r = form.querySelector(`input[name="${id}"]`);
-      v = Number(r.value)/2.5; // 0..4
-    }
-
-    if(dim==="d"){ d += v; dMax += 4; }
-    else { a += v; aMax += 4; }
-  }
-  // devolvemos % sobre 100
-  return {
-    d: Math.round(d*100/dMax),
-    a: Math.round(a*100/aMax)
-  };
-}
-
-function interp(pct, eje){
-  // bandas descriptivas
-  if(pct < 25) return `${eje} muy bajo: pensamiento crítico operativo.`;
-  if(pct < 50) return `${eje} moderado: hay tensión, pero conservas distancia crítica.`;
-  if(pct < 75) return `${eje} alto: hashtags y mantras del mercado te guían más de lo que crees.`;
-  return `${eje} extremo: el panóptico está dentro; urge higiene digital y comunitaria.`;
-}
-
-function overallText(d,a){
-  // cuadrantes
-  const quad = (d>=50?2:0) + (a>=50?1:0);
-  switch(quad){
-    case 0: return "Perfil: <strong>Crítico resistente</strong>. Reconoces la ideología y cuidas tus límites.";
-    case 1: return "Perfil: <strong>Espejo del algoritmo</strong>. Ves, pero te autoexiges de más. Trabaja el descanso y los vínculos.";
-    case 2: return "Perfil: <strong>Optimista ingenuo</strong>. Crees en ‘no hay alternativa’. Revisa fuentes y mejora alfabetización mediática.";
-    case 3: return "Perfil: <strong>Turbo-homo oeconomicus</strong>. Alta fe en el mercado y alta autoexplotación. ¡Tiempo de pausa y lectura crítica!";
-  }
-}
-
-function downloadCSV(d,a){
-  // exportar pares pregunta-respuesta + % por eje
-  const lines = [];
-  lines.push("id,pregunta,dimensión,valor(0-4)");
-  questions.forEach((q,i)=>{
-    const id = `q${i+1}`;
-    let val = "";
-    if(q.type==="likert" || q.type==="choice"){
-      const sel = form.querySelector(`input[name="${id}"]:checked`);
-      if(sel) val = sel.value;
-    }else{
-      const r = form.querySelector(`input[name="${id}"]`);
-      if(r) val = (Number(r.value)/2.5).toFixed(2);
-    }
-    const dim = q.dim==="d"?"Desconocimiento":"Autoengaño";
-    lines.push(`${i+1},"${q.t.replace(/"/g,'""')}",${dim},${val}`);
-  });
-  lines.push("");
-  lines.push(`Desconocimiento (%),${d}`);
-  lines.push(`Autoengaño (%),${a}`);
-  const blob = new Blob([lines.join("\n")], {type:"text/csv;charset=utf-8"});
-  const url = URL.createObjectURL(blob);
-  const aTag = document.createElement("a");
-  aTag.href = url; aTag.download = "diagnostico_capitalismo.csv";
-  document.body.appendChild(aTag); aTag.click(); aTag.remove();
-  URL.revokeObjectURL(url);
-}
-
-/* render & events */
-render();
-
-form.addEventListener("change", ()=>{
-  progressFill.style.width = getProgress()+"%";
-});
-
-form.addEventListener("submit", (e)=>{
-  e.preventDefault();
-  // validar: todos los likert/choice contestados
-  const missing = Array.from(form.querySelectorAll('.q[data-type="likert"], .q[data-type="choice"]'))
-    .filter(q => !form.querySelector(`input[name="${q.id}"]:checked`));
-  if(missing.length){
-    alert("Faltan respuestas. Revisa las preguntas: " + missing.map(m=>m.id.replace("q","")).join(", "));
-    return;
-  }
-
-  const {d,a} = score();
-  dFill.style.width = d+"%";
-  aFill.style.width = a+"%";
-  dText.textContent = interp(d, "Desconocimiento");
-  aText.textContent = interp(a, "Autoengaño");
-  overall.innerHTML = overallText(d,a);
-  resultsBox.hidden = false;
-  resultsBox.scrollIntoView({behavior:"smooth"});
-});
-
-document.getElementById("retry").addEventListener("click", ()=>{
-  resultsBox.hidden = true;
-  window.scrollTo({top:0,behavior:"smooth"});
-});
-document.getElementById("download").addEventListener("click", ()=>{
-  const {d,a} = score();
-  downloadCSV(d,a);
-});
-
-progressFill.style.width = getProgress()+"%";
-</script>
-</body>
-</html>
+  {t:"Hago horas extra s
