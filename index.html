@@ -6,7 +6,6 @@
 <title>¿Qué tan enferm@ de capitalismo estás?</title>
 <meta name="description" content="Cuestionario satírico (Fisher, Han, Bauman) para medir Desconocimiento y Autoengaño. Estética hacker 90s."/>
 <style>
-  /* ===== PALETA ===== */
   :root{
     --bg:#000000;       /* fondo */
     --heading:#27F5F5;  /* títulos (azul) */
@@ -16,12 +15,9 @@
     --panel:#0a0a0a;
     --line:#141414;
   }
-
-  /* ===== BASE & LOOK HACKER 90s ===== */
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
-    line-height:1.5}
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace; line-height:1.5}
   h1,h2,h3{color:var(--heading);margin:0 0 .5rem}
   a{color:var(--heading)}
   .wrap{max-width:1000px;margin:auto;padding:24px}
@@ -29,22 +25,18 @@
   .terminal{border:1px solid #0f0f0f;background:#060606;padding:12px;border-radius:10px;
             box-shadow: inset 0 0 0 1px #0f0f0f, 0 0 30px rgba(60,245,39,.08)}
   .glow{filter:drop-shadow(0 0 6px rgba(39,245,245,.55)) drop-shadow(0 0 10px rgba(60,245,39,.20))}
-  .scanlines:before{
-    content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
+  .scanlines:before{content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
     background:repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 2px, transparent 2px 4px);
-    mix-blend-mode:soft-light;
-  }
+    mix-blend-mode:soft-light;}
   .blink{animation:blink 1.1s steps(1,end) infinite}
   @keyframes blink{50%{opacity:0}}
   .ribbon{height:8px;background:repeating-linear-gradient(90deg,transparent 0 14px,var(--accent) 14px 28px)}
   .pill{display:inline-block;border:1px solid #2b2b2b;padding:3px 8px;border-radius:999px;color:#cfcfcf;background:#080808}
 
-  /* ===== BARRA PROGRESO ===== */
   .progress{position:sticky;top:0;z-index:50;background:#020202f2;border-bottom:1px solid #101010;backdrop-filter:blur(6px);padding:8px 0}
   .bar{height:10px;border:1px solid #1b1b1b;background:#0b0b0b;border-radius:999px;overflow:hidden}
   .bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),#6dff7c);transition:width .3s}
 
-  /* ===== FORM ===== */
   .section{margin-top:18px}
   .q{margin:12px 0;padding:12px;border:1px solid #121212;border-radius:10px;background:#080808}
   .q legend{font-weight:700;color:#d8d8d8;margin-bottom:6px}
@@ -67,7 +59,6 @@
   button{background:var(--accent);color:#061006;border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
   button.secondary{background:#0d0d0d;color:#f0f0f0;border:1px solid #1f1f1f}
 
-  /* ===== RESULTADOS ===== */
   .meters{display:grid;grid-template-columns:1fr;gap:14px}
   .meter{padding:12px;background:#070707;border:1px solid #141414;border-radius:10px}
   .meter .bar{height:12px}
@@ -76,7 +67,6 @@
 </style>
 </head>
 <body class="scanlines">
-  <!-- PROGRESO -->
   <div class="progress">
     <div class="wrap" style="padding:0 24px">
       <span style="color:var(--heading);font-weight:800" class="glow">BOOT://diagnóstico_40_items</span>
@@ -86,26 +76,22 @@
   </div>
 
   <div class="wrap">
-    <!-- CABECERA -->
     <div class="panel glow">
       <div class="ribbon" aria-hidden="true"></div>
       <h1>¿Qué tan enferm@ de capitalismo estás?</h1>
       <p class="help">Instrumento satírico con base crítica (Fisher, 2009; Han, 2010; Bauman, 2000/2005). Evalúa dos ejes: <span class="badge">Desconocimiento</span> y <span class="badge">Autoengaño</span>.</p>
-
-      <!-- línea terminal sin ASCII arte -->
       <div class="terminal" aria-label="prompt">
         <div style="color:#27F5F5">user@critico:~$ <span style="color:#3CF527">run ./diagnostico --items=40 --ejes=Desconocimiento,Autoengaño</span></div>
+        <div id="err" class="help" style="display:none;color:#ff9e9e;margin-top:8px"></div>
       </div>
     </div>
 
-    <!-- FORMULARIO -->
     <main class="panel section" id="app">
       <h2>Responde todo (0 = Nada/En desacuerdo → 4 = Mucho/De acuerdo)</h2>
       <div class="pill">Escala Likert 0–4</div>
       <div class="pill">2 ejes</div>
       <form id="form"></form>
 
-      <!-- RESULTADOS -->
       <section id="results" class="panel section" hidden>
         <h2>Resultados</h2>
         <div class="meters">
@@ -128,7 +114,6 @@
       </section>
     </main>
 
-    <!-- REFERENCIAS -->
     <footer class="panel section">
       <h2>Referencias mínimas</h2>
       <ul class="help" style="margin-top:6px">
@@ -139,8 +124,10 @@
     </footer>
   </div>
 
+<noscript><div class="wrap"><div class="panel" style="border-color:#7a0000">Activa JavaScript para ver el cuestionario.</div></div></noscript>
+
 <script>
-/* ========== CONFIGURACIÓN DEL INSTRUMENTO ========== */
+/* ====== Config ====== */
 const SCALE = [
   "0 · Nada/Totalmente en desacuerdo",
   "1 · Poco/En desacuerdo",
@@ -149,7 +136,7 @@ const SCALE = [
   "4 · Mucho/Totalmente de acuerdo"
 ];
 
-// 40 ítems: dim = 'd' (Desconocimiento) o 'a' (Autoengaño)
+// 40 ítems: 'd' = Desconocimiento; 'a' = Autoengaño
 const questions = [
   // A. Trabajo / autoexplotación (Han)
   {t:"Me siento culpable cuando descanso.", dim:"a", type:"likert"},
@@ -159,6 +146,7 @@ const questions = [
   {t:"He romantizado el burnout (quemarme) como señal de compromiso.", dim:"a", type:"likert"},
   {t:"He dicho/creído ‘soy mi propio jefe’ para justificar autoexplotarme.", dim:"a", type:"likert"},
   {t:"La productividad está por encima de mi salud.", dim:"a", type:"likert"},
+
   // B. Redes/consumo (Bauman)
   {t:"Me parece normal tener que venderme como marca personal.", dim:"a", type:"likert"},
   {t:"He medido mi valía por likes o métricas digitales.", dim:"a", type:"likert"},
@@ -167,6 +155,7 @@ const questions = [
   {t:"Me da ansiedad no estar ‘actualizado/a’ (moda/tech).", dim:"a", type:"likert"},
   {t:"Creo que la privacidad es casi obsoleta si quiero participar en la vida digital.", dim:"a", type:"likert"},
   {t:"Actúo como si siempre me observaran (panóptico interiorizado).", dim:"a", type:"likert"},
+
   // C. Ideología / creencias (Fisher)
   {t:"Niego o minimizo el cambio climático.", dim:"d", type:"likert"},
   {t:"Pienso que la igualdad social genera mediocridad.", dim:"d", type:"likert"},
@@ -184,5 +173,203 @@ const questions = [
   {t:"El sistema es injusto, pero no hay alternativa posible.", dim:"d", type:"likert"},
   {t:"Me molesta más una huelga que una subida de precios.", dim:"d", type:"likert"},
   {t:"Prefiero ‘emprender’ a tener derechos laborales garantizados.", dim:"d", type:"likert"},
+
   // D. Vínculos / vida líquida (Bauman + Han)
-  {t:"Veo mis amistades principalmente como ‘contactos ú
+  {t:"Veo mis amistades principalmente como ‘contactos útiles’.", dim:"a", type:"likert"},
+  {t:"Invierto tiempo en alguien solo si ‘vale la pena’.", dim:"a", type:"likert"},
+  {t:"Gestiono las relaciones como proyectos con objetivos y métricas.", dim:"a", type:"likert"},
+  {t:"Me aburre el compromiso que no tiene gratificación inmediata.", dim:"a", type:"likert"},
+  {t:"He dejado vínculos importantes por crecer profesionalmente.", dim:"a", type:"likert"},
+  {t:"Mido mi éxito personal por cuántos proyectos llevo a la vez.", dim:"a", type:"likert"},
+
+  // E. Cultura / regulación / identidad
+  {t:"Valoro la cultura en función de si es monetizable.", dim:"d", type:"likert"},
+  {t:"Me considero ‘clase media’ aunque mis ingresos sean bajos.", dim:"a", type:"likert"},
+  {t:"La competencia siempre mejora cualquier sistema.", dim:"d", type:"likert"},
+  {t:"La educación es sobre todo una inversión para ganar más dinero.", dim:"d", type:"likert"},
+  {t:"Me comparo constantemente con métricas (rankings, followers, salario, etc.).", dim:"a", type:"likert"},
+  {t:"Compro cosas ‘eco’ para sentirme bien sin cambiar hábitos de fondo.", dim:"a", type:"likert"},
+  {t:"Veo a los inmigrantes como competidores laborales directos.", dim:"d", type:"likert"},
+  {t:"La regulación del Estado es un obstáculo a la libertad incluso en salud/ambiente.", dim:"d", type:"likert"},
+  {t:"Me identifico más como ‘marca personal’ que como ciudadano/a o comunidad.", dim:"a", type:"likert"},
+  {t:"Del 0 al 10, ¿cuánto te sobreexplotas (autoexigencia/culpa por descansar)?", dim:"a", type:"scale10"}
+];
+
+const $ = s => document.querySelector(s);
+const form = $("#form");
+const resultsBox = $("#results");
+const progressFill = $("#progressFill");
+const dFill = $("#dFill");
+const aFill = $("#aFill");
+const dText = $("#dText");
+const aText = $("#aText");
+const overall = $("#overall");
+const errBox = $("#err");
+
+/* ====== Render robusto (sin índices raros) ====== */
+function renderSafe(){
+  const sectionStarts = {
+    0: "A // Trabajo y rendimiento (Han)",
+    7: "B // Consumo, imagen y redes (Bauman)",
+    14:"C // Ideología y sentido común (Fisher)",
+    24:"D // Vínculos y vida líquida (Bauman/Han)",
+    30:"E // Cultura, regulación y marca personal"
+  };
+
+  let sec;
+  for(let i=0;i<questions.length;i++){
+    if(sectionStarts[i]){
+      sec = document.createElement("section");
+      sec.className="section panel";
+      const h=document.createElement("h3");
+      h.textContent=sectionStarts[i];
+      sec.appendChild(h);
+      form.appendChild(sec);
+    }
+    const q = questions[i];
+    const id = `q${i+1}`;
+    const fs = document.createElement("fieldset");
+    fs.className="q terminal"; fs.dataset.dim=q.dim; fs.dataset.type=q.type; fs.id=id;
+
+    const leg = document.createElement("legend");
+    leg.textContent = `${i+1}. ${q.t}`;
+    fs.appendChild(leg);
+
+    if(q.type==="likert"){
+      const grid=document.createElement("div"); grid.className="Likert";
+      for(let v=0;v<5;v++){
+        const input=document.createElement("input");
+        input.type="radio"; input.name=id; input.value=String(v);
+        input.id=`${id}_${v}`; input.required=true;
+        const lab=document.createElement("label");
+        lab.setAttribute("for",input.id); lab.title=SCALE[v]; lab.textContent=String(v);
+        grid.appendChild(input); grid.appendChild(lab);
+      }
+      fs.appendChild(grid);
+    }else if(q.type==="choice"){
+      const grid=document.createElement("div"); grid.className="choice";
+      q.opts.forEach((op,k)=>{
+        const input=document.createElement("input");
+        input.type="radio"; input.name=id; input.value=String(op.v);
+        input.id=`${id}_c${k}`; input.required=true;
+        const lab=document.createElement("label");
+        lab.setAttribute("for",input.id); lab.innerHTML=`<strong>${op.label}</strong>`;
+        grid.appendChild(input); grid.appendChild(lab);
+      });
+      fs.appendChild(grid);
+    }else{ // scale10
+      const row=document.createElement("div"); row.className="range";
+      const r=document.createElement("input");
+      r.type="range"; r.min="0"; r.max="10"; r.step="1"; r.value="5"; r.name=id; r.id=id;
+      const out=document.createElement("output"); out.textContent="5";
+      r.addEventListener("input",()=>out.textContent=r.value);
+      row.appendChild(r); row.appendChild(out);
+      fs.appendChild(row);
+      const hlp=document.createElement("div"); hlp.className="help"; hlp.textContent="0 = nada · 10 = muchísimo";
+      fs.appendChild(hlp);
+    }
+    sec.appendChild(fs);
+  }
+
+  // Acciones
+  const actions=document.createElement("div");
+  actions.className="btns";
+  const submit=document.createElement("button"); submit.type="submit"; submit.textContent="Calcular resultados";
+  const clear=document.createElement("button"); clear.type="reset"; clear.textContent="Limpiar"; clear.className="secondary";
+  actions.appendChild(submit); actions.appendChild(clear);
+  form.appendChild(actions);
+}
+
+function getProgress(){
+  const lik=form.querySelectorAll('.q[data-type="likert"]').length;
+  const cho=form.querySelectorAll('.q[data-type="choice"]').length;
+  const sca=form.querySelectorAll('.q[data-type="scale10"]').length;
+  const aLik=Array.from(form.querySelectorAll('.q[data-type="likert"]')).filter(q=>form.querySelector(`input[name="${q.id}"]:checked`)).length;
+  const aCho=Array.from(form.querySelectorAll('.q[data-type="choice"]')).filter(q=>form.querySelector(`input[name="${q.id}"]:checked`)).length;
+  const aSca=sca; // sliders siempre tienen valor
+  return Math.round((aLik+aCho+aSca)*100/(lik+cho+sca));
+}
+
+function score(){
+  let d=0,a=0,dMax=0,aMax=0;
+  for(const q of form.querySelectorAll(".q")){
+    const id=q.id, dim=q.dataset.dim, type=q.dataset.type;
+    let v=0;
+    if(type==="likert"||type==="choice"){
+      const sel=form.querySelector(`input[name="${id}"]:checked`);
+      if(!sel) continue;
+      v=Number(sel.value);
+    }else{
+      const r=form.querySelector(`input[name="${id}"]`);
+      v=Number(r.value)/2.5; // 0..4
+    }
+    if(dim==="d"){ d+=v; dMax+=4; } else { a+=v; aMax+=4; }
+  }
+  return { d: Math.round(d*100/dMax), a: Math.round(a*100/aMax) };
+}
+
+function interp(pct,eje){
+  if(pct<25) return `${eje} muy bajo: pensamiento crítico operativo.`;
+  if(pct<50) return `${eje} moderado: hay tensión, pero conservas distancia crítica.`;
+  if(pct<75) return `${eje} alto: hashtags del mercado te guían más de lo que crees.`;
+  return `${eje} extremo: panóptico interiorizado; urge higiene digital y comunitaria.`;
+}
+function overallText(d,a){
+  const quad=(d>=50?2:0)+(a>=50?1:0);
+  switch(quad){
+    case 0: return "Perfil: <strong>Crítico resistente</strong>. Reconoces la ideología y cuidas tus límites.";
+    case 1: return "Perfil: <strong>Espejo del algoritmo</strong>. Ves, pero te autoexiges de más. Trabaja descanso y vínculos.";
+    case 2: return "Perfil: <strong>Optimista ingenuo</strong>. Confías en ‘no hay alternativa’. Revisa fuentes y alfabetización mediática.";
+    case 3: return "Perfil: <strong>Turbo-homo oeconomicus</strong>. Alta fe en el mercado y alta autoexplotación. Pausa y lectura crítica.";
+  }
+}
+function downloadCSV(d,a){
+  const lines=["id,pregunta,dimensión,valor(0-4)"];
+  questions.forEach((q,i)=>{
+    const id=`q${i+1}`;
+    let val="";
+    if(q.type==="likert"||q.type==="choice"){
+      const sel=form.querySelector(`input[name="${id}"]:checked`);
+      if(sel) val=sel.value;
+    }else{
+      const r=form.querySelector(`input[name="${id}"]`);
+      if(r) val=(Number(r.value)/2.5).toFixed(2);
+    }
+    const dim=q.dim==="d"?"Desconocimiento":"Autoengaño";
+    lines.push(`${i+1},"${q.t.replace(/"/g,'""')}",${dim},${val}`);
+  });
+  lines.push(""); lines.push(`Desconocimiento (%),${d}`); lines.push(`Autoengaño (%),${a}`);
+  const blob=new Blob([lines.join("\n")],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob); const aTag=document.createElement("a");
+  aTag.href=url; aTag.download="diagnostico_capitalismo.csv"; document.body.appendChild(aTag); aTag.click(); aTag.remove();
+  URL.revokeObjectURL(url);
+}
+
+/* ====== Init con manejo de errores ====== */
+try{
+  renderSafe();
+  progressFill.style.width=getProgress()+"%";
+  form.addEventListener("change",()=>{progressFill.style.width=getProgress()+"%"});
+  form.addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const missing=Array.from(form.querySelectorAll('.q[data-type="likert"],.q[data-type="choice"]'))
+      .filter(q=>!form.querySelector(`input[name="${q.id}"]:checked`));
+    if(missing.length){ alert("Faltan respuestas: "+missing.map(m=>m.id.replace("q","")).join(", ")); return; }
+    const {d,a}=score();
+    document.getElementById("dFill").style.width=d+"%";
+    document.getElementById("aFill").style.width=a+"%";
+    document.getElementById("dText").textContent=interp(d,"Desconocimiento");
+    document.getElementById("aText").textContent=interp(a,"Autoengaño");
+    overall.innerHTML=overallText(d,a);
+    resultsBox.hidden=false; resultsBox.scrollIntoView({behavior:"smooth"});
+  });
+  document.getElementById("retry").addEventListener("click",()=>{resultsBox.hidden=true; window.scrollTo({top:0,behavior:"smooth"})});
+  document.getElementById("download").addEventListener("click",()=>{const {d,a}=score(); downloadCSV(d,a)});
+}catch(e){
+  const box = errBox;
+  if(box){ box.style.display="block"; box.textContent = "Error al cargar el formulario: "+(e.message||e); }
+  console.error(e);
+}
+</script>
+</body>
+</html>
