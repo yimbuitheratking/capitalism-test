@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Qué tan enfermo de capitalismo estás?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f4f4f4;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question label {
+      display: block;
+      font-weight: bold;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Diagnóstico: ¿Qué tan enfermo de capitalismo estás?</h1>
+  <p>Basado en obras de Mark Fisher, Byung-Chul Han y Zygmunt Bauman.</p>
+
+  <form id="capitalismoForm">
+    
+    <!-- Ejemplo con 3 preguntas. Luego te doy un link para descargar las 40 -->
+    <div class="question">
+      <label>1. ¿Te sientes culpable cuando descansas?</label>
+      <select name="q1">
+        <option value="0">Nunca</option>
+        <option value="1">Rara vez</option>
+        <option value="2">A veces</option>
+        <option value="3">Frecuentemente</option>
+        <option value="4">Siempre</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <label>2. ¿Cuántas horas extra haces sin que te las paguen?</label>
+      <input type="text" name="q2" placeholder="Ej. 5 horas">
+    </div>
+
+    <div class="question">
+      <label>3. ¿Qué tan importante es tu imagen en redes sociales? (0–10)</label>
+      <input type="number" name="q3" min="0" max="10">
+    </div>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    document.getElementById('capitalismoForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert("¡Formulario enviado! (No se guarda nada porque es solo demostración)");
+    });
+  </script>
+
+</body>
+</html>
+"first commit"
